@@ -1,0 +1,227 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+/* NAVBAR */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f4f3f3;
+  height: 8rem;
+  padding: 2rem;
+  width: 100%;
+  position: fixed;
+  z-index: 999;
+}
+
+.nav-btn {
+  display: inline-block;
+  padding: 1rem 3rem;
+  font-size: 1.8rem;
+  background-color: #111727;
+  color: #fff;
+  border-radius: 5rem;
+  border: none;
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.nav-btn:hover {
+  color: #111727;
+  background-color: #f4f3f3;
+  box-shadow: inset 0 0 0 2px #111727;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+
+.main-nav-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 4rem;
+}
+
+.main-nav-link {
+  font-size: 2rem;
+  color: #000;
+  text-decoration: none;
+}
+
+.active {
+  font-weight: 700;
+}
+
+.logo {
+  width: 6rem;
+}
+
+/* DETAIL */
+
+.detail-img {
+  width: 100%;
+  border-radius: 1rem;
+}
+
+.project-heading {
+  font-size: 4rem;
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.detail-container {
+  padding: 0 4rem 4rem 4rem;
+}
+
+.detail-section {
+  padding: 4.8rem 0 4.8rem 0;
+  background-color: rgb(237, 233, 224);
+}
+
+.detail-project {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 8rem;
+}
+
+.detail-duration,
+.detail-tech {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.boxes-duration,
+.boxes-tech {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.box-duration,
+.box-tech {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.box-duration-title,
+.box-tech-title {
+  font-size: 2.5rem;
+}
+
+.duration-icon,
+.tech-icon {
+  font-size: 4rem;
+}
+
+.boxes-tech {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.detail-tech {
+  margin-top: 2rem;
+}
+
+.detail-description-box {
+  margin-top: 4rem;
+}
+
+.detail-description {
+  font-size: 1.8rem;
+  line-height: 2;
+  text-align: justify;
+}
+
+.nav-icon-mobile {
+  font-size: 4rem;
+  display: none;
+}
+
+@media only screen and (max-width: 1200px) {
+  .detail-project {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media only screen and (max-width: 944px) {
+  .detail-project {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  /* NAV */
+  .nav-btn {
+    display: none;
+  }
+
+  .nav-icon-mobile {
+    display: block;
+  }
+
+  .main-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 8rem;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 20rem;
+    background-color: rgb(237, 233, 224);
+    transition: all 0.4s;
+
+    /* hide navigation */
+
+    /* 1) hide it visually */
+    opacity: 0;
+
+    /* 2) make it unaccessible to mouse and keyboard */
+    pointer-events: none;
+
+    /* 3) hide it from screen readers */
+    visibility: hidden;
+  }
+
+  .active-mobile.main-nav {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+
+  .main-nav-list {
+    flex-direction: column;
+    gap: 3rem;
+  }
+}
+
+@media only screen and (max-width: 544px) {
+  .boxes-tech {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-project {
+    gap: 4rem;
+  }
+}

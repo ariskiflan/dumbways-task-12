@@ -1,0 +1,278 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+/* NAVBAR */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f4f3f3;
+  height: 8rem;
+  padding: 2rem;
+  width: 100%;
+  position: fixed;
+  z-index: 999;
+}
+
+.nav-btn {
+  display: inline-block;
+  padding: 1rem 3rem;
+  font-size: 1.8rem;
+  background-color: #111727;
+  color: #fff;
+  border-radius: 5rem;
+  border: none;
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.nav-btn:hover {
+  color: #111727;
+  background-color: #f4f3f3;
+  box-shadow: inset 0 0 0 2px #111727;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+
+.main-nav-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 4rem;
+}
+
+.main-nav-link {
+  font-size: 2rem;
+  color: #000;
+  text-decoration: none;
+}
+
+.active {
+  font-weight: 700;
+}
+
+.logo {
+  width: 7rem;
+}
+
+/* HERO SECTION */
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: rgb(237, 233, 224);
+}
+
+.personal-web-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 5rem;
+  width: 130rem;
+  background-color: #fff;
+  padding: 5rem;
+  margin: 5rem;
+  border-radius: 1rem;
+  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.2);
+}
+
+.hero-description {
+  padding: 2rem 4rem;
+}
+
+.personal-web-title {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.personal-web-description {
+  font-size: 1.8rem;
+  text-align: justify;
+  margin-bottom: 4rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 1rem 3rem;
+  font-size: 1.8rem;
+  background-color: #111727;
+  color: #fff;
+  border-radius: 5rem;
+  border: none;
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.btn:hover {
+  color: #111727;
+  background-color: #fff;
+  box-shadow: inset 0 0 0 2px #111727;
+}
+
+.download-cv {
+  font-size: 2rem;
+  text-decoration: none;
+  color: rgb(14, 14, 14);
+  font-weight: 500;
+  margin-left: 2rem;
+}
+
+.sosmed-container {
+  display: flex;
+  gap: 2rem;
+  margin-top: 5rem;
+}
+
+.home-social-link {
+  display: inline-flex;
+  font-size: 4rem;
+  background-color: #111727;
+  color: #fff;
+  transition: all 0.4s;
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  margin-bottom: 4rem;
+}
+
+.home-social-link:hover {
+  background-color: #fff;
+  color: #111727;
+  box-shadow: inset 0 0 0 2px #111727;
+}
+
+.img-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.img-box {
+  width: 30rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  text-align: center;
+  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.2);
+}
+
+.img-name {
+  font-size: 2rem;
+  color: rgb(14, 14, 14);
+  font-weight: 700;
+  margin-top: 2rem;
+}
+
+.img-job {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+}
+
+.img {
+  width: 100%;
+}
+
+.nav-icon-mobile {
+  font-size: 4rem;
+  display: none;
+}
+
+@media only screen and (max-width: 992px) {
+  .sosmed-container {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .personal-web-container {
+    display: block;
+    padding: 4rem;
+  }
+
+  /* NAV */
+  .nav-btn {
+    display: none;
+  }
+
+  .nav-icon-mobile {
+    display: block;
+  }
+
+  .main-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 8rem;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 20rem;
+    background-color: rgb(237, 233, 224);
+    transition: all 0.4s;
+
+    /* hide navigation */
+
+    /* 1) hide it visually */
+    opacity: 0;
+
+    /* 2) make it unaccessible to mouse and keyboard */
+    pointer-events: none;
+
+    /* 3) hide it from screen readers */
+    visibility: hidden;
+  }
+
+  .active-mobile.main-nav {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+
+  .main-nav-list {
+    flex-direction: column;
+    gap: 3rem;
+  }
+}
+
+@media only screen and (max-width: 544px) {
+  .btn {
+    margin-bottom: 2rem;
+  }
+
+  .download-cv {
+    display: block;
+    margin-left: 0;
+  }
+
+  .hero-description {
+    padding: 2rem;
+  }
+
+  .personal-web-container {
+    padding: 2rem;
+  }
+}

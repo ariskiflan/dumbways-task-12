@@ -1,0 +1,435 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+/* NAVBAR */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f4f3f3;
+  height: 8rem;
+  padding: 2rem;
+  width: 100%;
+  position: fixed;
+  z-index: 999;
+}
+
+.nav-btn {
+  display: inline-block;
+  padding: 1rem 3rem;
+  font-size: 1.8rem;
+  background-color: #111727;
+  color: #fff;
+  border-radius: 5rem;
+  border: none;
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.nav-btn:hover {
+  color: #111727;
+  background-color: #f4f3f3;
+  box-shadow: inset 0 0 0 2px #111727;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+
+.main-nav-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 4rem;
+}
+
+.main-nav-link {
+  font-size: 2rem;
+  color: #000;
+  text-decoration: none;
+}
+
+.active {
+  font-weight: 700;
+}
+
+.logo {
+  width: 6rem;
+}
+
+/* ADD MY PROJECT */
+
+.add-project {
+  background-color: rgb(237, 233, 224);
+  padding: 4.8rem 0 4.8rem 0;
+}
+
+.container {
+  max-width: 120rem;
+  /* padding: 0 4.8rem; */
+  margin: 0 auto;
+  width: 50% !important;
+}
+
+.add-project-box {
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 3rem;
+}
+
+.project-form {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.project-heading {
+  font-size: 4rem;
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.input-label {
+  font-size: 2rem;
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+}
+
+.project-form input,
+.project-form textarea {
+  font-size: 2rem;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 1rem;
+  border: none;
+  width: 100%;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+}
+
+.project-form textarea {
+  resize: none;
+  height: 15rem;
+}
+
+.date-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.date-box input {
+  width: 100%;
+}
+
+.checkbox-container {
+  /* display: grid;
+  grid-template-columns: 1fr 1fr; */
+  gap: 2rem;
+}
+
+.checkbox-container input {
+  appearance: none;
+  width: 3rem;
+  height: 3rem;
+  margin-right: 2rem;
+  border-radius: 1rem;
+  background-color: #fff;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* input[type="checkbox"]::after {
+  font-family: "Font Awesome 6 Free";
+  content: "\f00c";
+  font-weight: 700;
+  font-size: 3rem;
+  display: none;
+} */
+
+input[type="checkbox"]:checked:after {
+  display: block;
+}
+
+.checkbox-container div {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-title {
+  font-size: 2rem;
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+}
+
+.checkbox-label {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.file-upload input {
+  outline: none;
+  padding: 0;
+  color: transparent;
+}
+
+::-webkit-file-upload-button {
+  color: #fff;
+  background-color: #111727;
+  border: none;
+  padding: 1rem;
+  outline: none;
+  border-radius: 1rem;
+  transition: all 0.3s;
+}
+
+::-webkit-file-upload-button:hover {
+  color: #111727;
+  background-color: #fff;
+  box-shadow: inset 0 0 0 2px #111727;
+}
+
+.upload-img {
+  font-size: 2rem;
+}
+
+.contact-btn {
+  display: inline-block;
+  padding: 1rem 3rem;
+  font-size: 1.8rem;
+  background-color: #111727;
+  color: #fff;
+  border-radius: 5rem;
+  border: none;
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.contact-btn:hover {
+  color: #111727;
+  background-color: #fff;
+  box-shadow: inset 0 0 0 2px #111727;
+}
+
+.btn-container {
+  text-align: right;
+}
+
+/* LIST MY PROJECT */
+
+.container-list {
+  max-width: 120rem;
+  /* padding: 0 4.8rem; */
+  margin: 0 auto;
+  width: 100%;
+}
+
+.list-project {
+  background-color: #fff;
+  padding: 4.8rem 0 4.8rem 0;
+  position: relative;
+}
+
+.list-box {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4rem;
+  margin: 0 4rem;
+}
+
+.list-project-title {
+  font-size: 2rem;
+  margin-top: 1.3rem;
+}
+
+.list-project-duration {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #514a4a;
+}
+
+.list-project-description {
+  font-size: 1.5rem;
+  /* padding-right: 3rem; */
+  margin-top: 2rem;
+  font-weight: 500;
+  width: 30rem;
+  word-wrap: break-word;
+}
+
+.box {
+  padding: 2rem;
+  box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+  transition: all 0.3s;
+}
+
+.box:hover {
+  transform: translateY(-1.2rem);
+}
+
+.list-img {
+  width: 100%;
+  border-radius: 1rem;
+}
+
+.list-icon {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 2rem 0 2rem 0;
+}
+
+.list-icon i {
+  font-size: 3rem;
+}
+
+.button-box {
+  display: flex;
+  gap: 2rem;
+}
+
+.list-btn {
+  display: inline-block;
+  width: 100%;
+  padding: 0.7rem 2rem;
+  font-size: 1.8rem;
+  background-color: #111727;
+  color: #fff;
+  border-radius: 1rem;
+  border: none;
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.list-btn:hover {
+  color: #000;
+  background-color: #fff;
+  box-shadow: inset 0 0 0 2px #111727;
+}
+
+.nav-icon-mobile {
+  font-size: 4rem;
+  display: none;
+}
+
+@media only screen and (max-width: 1200px) {
+  .list-box {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  /* NAV */
+  .nav-btn {
+    display: none;
+  }
+
+  .nav-icon-mobile {
+    display: block;
+  }
+
+  .main-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 8rem;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 20rem;
+    background-color: rgb(237, 233, 224);
+    transition: all 0.4s;
+
+    /* hide navigation */
+
+    /* 1) hide it visually */
+    opacity: 0;
+
+    /* 2) make it unaccessible to mouse and keyboard */
+    pointer-events: none;
+
+    /* 3) hide it from screen readers */
+    visibility: hidden;
+  }
+
+  .active-mobile.main-nav {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+
+  .main-nav-list {
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .list-box {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .box {
+    margin: 0 5rem;
+  }
+
+  .container {
+    max-width: 120rem;
+    /* padding: 0 4.8rem; */
+    margin: 0 auto;
+    width: 75% !important;
+  }
+}
+
+@media only screen and (max-width: 544px) {
+  .date-box {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .project-form {
+    padding: 2rem;
+  }
+
+  .project-heading {
+    font-size: 3.5rem;
+  }
+
+  .list-box {
+    grid-template-columns: repeat(1, 1fr);
+    margin: 0;
+    padding: 2rem;
+  }
+
+  .box {
+    margin: 0;
+  }
+}
