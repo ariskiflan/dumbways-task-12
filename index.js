@@ -22,26 +22,31 @@ app.get("/edit-my-project/:id", editMyProject);
 const data = [];
 
 function home(req, res) {
-  res.render("index");
+  const titlePage = "Home";
+  res.render("index", { titlePage });
 }
 
 function contact(req, res) {
-  res.render("contact");
+  const titlePage = "Contact";
+  res.render("contact", { titlePage });
 }
 
 function myProject(req, res) {
-  res.render("my-project", { data });
+  const titlePage = "My Project";
+  res.render("my-project", { data, titlePage });
 }
 
 function myTestimonials(req, res) {
-  res.render("my-testimonials");
+  const titlePage = "My Testimonials";
+  res.render("my-testimonials", { titlePage });
 }
 
 function detailProject(req, res) {
+  const titlePage = "Detail Project";
   const { id } = req.params;
   const dataDetailProject = data[id];
 
-  res.render("detail-project", { data: dataDetailProject });
+  res.render("detail-project", { data: dataDetailProject, titlePage });
 }
 
 function handleMyProject(req, res) {
@@ -86,6 +91,7 @@ function handleDeleteProject(req, res) {
 function editMyProject(req, res) {
   const { id } = req.params;
   const dataEditProject = data[id];
+
   res.render("edit-my-project", { data: dataEditProject });
 }
 
