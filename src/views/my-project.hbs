@@ -74,14 +74,14 @@
         <div class="container add-project-box">
           <h1 class="project-heading">ADD MY PROJECT</h1>
 
-          <form action="/my-project" method="POST">
+          <form class="project-form" action="/my-project" method="POST">
             <div class="mb-3">
               <label for="exampleInputName" class="form-label fs-2 fw-medium">
                 Project Name</label>
               <input
                 name="projectName"
                 type="text"
-                class="form-control py-4 px-2 shadow p-3 mb-5 bg-body-tertiary rounded border-0"
+                class="form-control px-2 shadow p-3 mb-5 bg-body-tertiary rounded border-0"
                 id="exampleInputName"
                 aria-describedby="emailHelp"
               />
@@ -97,7 +97,7 @@
                   name="startDate"
                   type="date"
                   style="font-size: 2rem"
-                  class="form-control py-3 px-2 shadow p-3 mb-5 bg-body-tertiary rounded border-0"
+                  class="form-control px-2 shadow p-3 mb-5 bg-body-tertiary rounded border-0"
                   id="exampleInputStartDate"
                 />
               </div>
@@ -110,7 +110,7 @@
                   name="endDate"
                   type="date"
                   style="font-size: 2rem"
-                  class="form-control py-3 px-2 shadow p-3 mb-5 bg-body-tertiary rounded border-0"
+                  class="form-control px-2 shadow p-3 mb-5 bg-body-tertiary rounded border-0"
                   id="exampleInputEndDate"
                 />
               </div>
@@ -204,7 +204,7 @@
               <label for="formFile" class="form-label fs-2 fw-medium">Upload
                 Image</label>
               <input
-                class="form-control form-control-lg py-3 px-2"
+                class="form-control form-control-lg px-2"
                 type="file"
                 id="formFile"
                 style="font-size: 2rem"
@@ -235,10 +235,14 @@
                   <img src="assets/img/project2.jpg" alt="" class="list-img" />
                 </a>
                 <h3 class="list-project-title">{{this.projectName}}</h3>
-                <p class="list-project-duration">
-                  Duration:
-                  {{this.distance}}
-                </p>
+                <div class="author-box">
+                  <p class="list-project-duration">
+                    Duration:
+                    {{this.distance}}
+                  </p>
+                  <p class="span-item">|</p>
+                  <p class="author-name">{{this.authorName}}</p>
+                </div>
                 <p class="list-project-description">{{this.description}}
                 </p>
 

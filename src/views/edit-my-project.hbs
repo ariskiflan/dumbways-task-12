@@ -74,7 +74,7 @@
         <div class="container add-project-box">
           <h1 class="project-heading">EDIT MY PROJECT</h1>
 
-          <form action="/my-project" method="POST">
+          <form action="/edit-my-project/{{data.id}}" method="POST">
             <div class="mb-3">
               <label for="exampleInputName" class="form-label fs-2 fw-medium">
                 Project Name</label>
@@ -139,7 +139,7 @@
               <div class="col checkbox-container d-flex flex-column">
                 <div class="form-check">
                   <input
-                    name="nodeJs"
+                    name="techIcon"
                     class="form-check-input"
                     type="checkbox"
                     value="fa-node"
@@ -154,7 +154,7 @@
                 </div>
                 <div class="form-check">
                   <input
-                    name="angularJs"
+                    name="techIcon"
                     class="form-check-input"
                     type="checkbox"
                     value="fa-angular"
@@ -172,7 +172,7 @@
               <div class="col checkbox-container d-flex flex-column">
                 <div class="form-check">
                   <input
-                    name="reactJs"
+                    name="techIcon"
                     class="form-check-input"
                     type="checkbox"
                     value="fa-react"
@@ -187,7 +187,7 @@
                 </div>
                 <div class="form-check">
                   <input
-                    name="java"
+                    name="techIcon"
                     class="form-check-input"
                     type="checkbox"
                     value="fa-java"
@@ -218,50 +218,57 @@
               <button
                 type="submit"
                 class="btn btn-primary px-5 py-3 fs-2 bg-dark rounded-pill border-0"
-                href="#"
                 role="button"
               >
-                Submit
+                Update
               </button>
             </div>
           </form>
         </div>
       </section>
 
-      <section class="list-project">
+      {{!-- <section class="list-project">
         <h1 class="project-heading">MY PROJECT</h1>
         <div class="container-list list-container">
-          {{!-- <div class="list-box">
+          <div class="list-box">
             {{#each data}}
               <div class="box">
                 <a href="/detail-project/{{@index}}">
-                  <img src="/assets/img/project2.jpg" alt="" class="list-img" />
+                  <img src="assets/img/project2.jpg" alt="" class="list-img" />
                 </a>
                 <h3 class="list-project-title">{{this.projectName}}</h3>
-                <p class="list-project-duration">
-                  Duration:
-                  {{this.distance}}
-                </p>
+                <div class="author-box">
+                  <p class="list-project-duration">
+                    Duration:
+                    {{this.distance}}
+                  </p>
+                  <p class="span-item">|</p>
+                  <p class="author-name">{{this.authorName}}</p>
+                </div>
                 <p class="list-project-description">{{this.description}}
                 </p>
 
                 <div class="list-icon">
-                  <i class="fa-brands fa-java"></i>
-                  <i class="fa-brands fa-angular"></i>
+                  {{#each this.techIcon}}
+                    <i class="fa-brands {{this}}"></i>
+                  {{/each}}
                 </div>
 
                 <div class="button-box">
-                  <a href="" class="list-btn">Edit</a>
+                  <a
+                    href="/edit-my-project/{{@index}}"
+                    class="list-btn"
+                  >Edit</a>
 
                   <a href="/delete/{{@index}}" class="list-btn">Delete</a>
 
                 </div>
               </div>
             {{/each}}
-          </div> --}}
+          </div>
 
         </div>
-      </section>
+      </section> --}}
     </main>
 
     <script src="/assets/script/my-project.js"></script>

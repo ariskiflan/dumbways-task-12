@@ -111,7 +111,7 @@ body {
 .contact-form input,
 .contact-form textarea,
 .contact-form select {
-  font-size: 2rem;
+  font-size: 1.5rem;
   padding: 1rem;
   background-color: #fff;
   border-radius: 1rem;
@@ -120,16 +120,21 @@ body {
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
 }
 
+.form-control,
+.form-select {
+  font-size: 1.5rem !important;
+}
+
 .contact-form textarea {
   resize: none;
   height: 15rem;
 }
 
-.contact-form {
+/* .contact-form {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-}
+} */
 
 .contact-btn {
   display: inline-block;

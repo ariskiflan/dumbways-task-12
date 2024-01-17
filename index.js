@@ -13,11 +13,14 @@ app.use(express.urlencoded({ extended: false })); // body parser
 app.get("/", home);
 app.get("/contact", contact);
 app.get("/my-project", myProject);
+app.post("/my-project", handleMyProject);
+
 app.get("/my-testimonials", myTestimonials);
 app.get("/detail-project/:id", detailProject);
-app.post("/my-project", handleMyProject);
+
 app.get("/delete/:id", handleDeleteProject);
 app.get("/edit-my-project/:id", editMyProject);
+app.post("/edit-my-project/:id", editMyProjectForm);
 
 const data = [];
 
@@ -76,7 +79,52 @@ function handleMyProject(req, res) {
     description,
     distance,
     techIcon: Array.isArray(techIcon) ? techIcon : [techIcon],
+    authorName: "Aris Kiflan",
   });
+
+  res.redirect("/my-project");
+}
+
+function editMyProject(req, res) {
+  const { id } = req.params;
+  const dataEditProject = data[+id];
+  dataEditProject.id = id;
+
+  res.render("edit-my-project", { data: dataEditProject });
+}
+
+function editMyProjectForm(req, res) {
+  const { id } = req.params;
+  const { projectName, startDate, endDate, description, techIcon } = req.body;
+
+  const dateOne = new Date(startDate);
+  const dateTwo = new Date(endDate);
+  const time = Math.abs(dateTwo - dateOne);
+  const days = Math.floor(time / (1000 * 60 * 60 * 24));
+  const months = Math.floor(time / (1000 * 60 * 60 * 24 * 30));
+  const years = Math.floor(time / (1000 * 60 * 60 * 24) / 365);
+
+  let distance = [];
+
+  if (days < 24) {
+    distance += days + " Days";
+  } else if (months < 12) {
+    distance += months + " Month";
+  } else if (years < 365) {
+    distance += years + " Years";
+  }
+
+  data[+id] = {
+    projectName,
+    startDate,
+    endDate,
+    description,
+    distance,
+    techIcon: Array.isArray(techIcon) ? techIcon : [techIcon],
+    authorName: "Aris Kiflan",
+  };
+
+  console.log(data[+id]);
 
   res.redirect("/my-project");
 }
@@ -86,13 +134,6 @@ function handleDeleteProject(req, res) {
   data.splice(id, 1);
 
   res.redirect("/my-project");
-}
-
-function editMyProject(req, res) {
-  const { id } = req.params;
-  const dataEditProject = data[id];
-
-  res.render("edit-my-project", { data: dataEditProject });
 }
 
 app.listen(port, () => {

@@ -118,13 +118,17 @@ body {
 
 .project-form input,
 .project-form textarea {
-  font-size: 2rem;
+  font-size: 1.5rem !important;
   padding: 1rem;
   background-color: #fff;
   border-radius: 1rem;
   border: none;
   width: 100%;
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+}
+
+.form-check-input {
+  margin-left: -1rem !important;
 }
 
 .project-form textarea {
@@ -339,6 +343,22 @@ input[type="checkbox"]:checked:after {
 .nav-icon-mobile {
   font-size: 4rem;
   display: none;
+}
+
+.author-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.author-name {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #514a4a;
+}
+
+.span-item {
+  font-size: 1.5rem;
 }
 
 @media only screen and (max-width: 1200px) {
