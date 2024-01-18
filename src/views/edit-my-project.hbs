@@ -75,11 +75,12 @@
           <h1 class="project-heading">EDIT MY PROJECT</h1>
 
           <form action="/edit-my-project/{{data.id}}" method="POST">
+
             <div class="mb-3">
               <label for="exampleInputName" class="form-label fs-2 fw-medium">
                 Project Name</label>
               <input
-                value="{{data.projectName}}"
+                value="{{data.project_name}}"
                 name="projectName"
                 type="text"
                 class="form-control py-4 px-2 shadow p-3 mb-5 bg-body-tertiary rounded border-0"
@@ -95,7 +96,7 @@
                   class="form-label fs-2 fw-medium"
                 >Start Date</label>
                 <input
-                  value="{{data.startDate}}"
+                  value="{{data.start_date}}"
                   name="startDate"
                   type="date"
                   style="font-size: 2rem"
@@ -109,7 +110,7 @@
                   class="form-label fs-2 fw-medium"
                 >End Date</label>
                 <input
-                  value="{{data.endDate}}"
+                  value="{{data.end_date}}"
                   name="endDate"
                   type="date"
                   style="font-size: 2rem"
@@ -284,7 +285,7 @@
       crossorigin="anonymous"
     ></script>
     <script>
-      const selectedTechsIcon = '{{data.techIcon}}'; const nodeJs =
+      const selectedTechsIcon = '{{data.technologies}}'; const nodeJs =
       document.getElementById("flexCheckDefaultNode"); const angularJs =
       document.getElementById("flexCheckDefaultAngular"); const reactJs =
       document.getElementById("flexCheckDefaultReact"); const java =

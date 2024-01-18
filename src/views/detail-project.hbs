@@ -71,7 +71,7 @@
     <main>
       <section class="detail-section">
         <div class="detail-container">
-          <h1 class="project-heading">{{data.projectName}}</h1>
+          <h1 class="project-heading">{{data.project_name}}</h1>
           <div class="detail-project">
             <div class="img-box-detail">
               <img src="/assets/img/project2.jpg" alt="" class="detail-img" />
@@ -82,9 +82,9 @@
               <div class="boxes-duration">
                 <div class="box-duration">
                   <i class="ri-calendar-line duration-icon"></i>
-                  <p class="box-duration-title">{{data.startDate}}
+                  <p class="box-duration-title">{{data.start_date}}
                     -
-                    {{data.endDate}}</p>
+                    {{data.end_date}}</p>
                 </div>
                 <div class="box-duration">
                   <i class="ri-timer-2-fill duration-icon"></i>
@@ -94,25 +94,9 @@
 
               <h3 class="detail-tech">Technologies</h3>
               <div class="boxes-tech">
-                {{#each data.techIcon}}
+                {{#each data.technologies}}
                   <i class="fa-brands {{this}} tech-icon"></i>
                 {{/each}}
-                {{!-- <div class="box-tech">
-                  <i class="fa-brands fa-node tech-icon"></i>
-                  <p class="box-tech-title">{{data.nodeJs}}</p>
-                </div>
-                <div class="box-tech">
-                  <i class="fa-brands fa-react tech-icon"></i>
-                  <p class="box-tech-title">{{data.reactJs}}</p>
-                </div>
-                <div class="box-tech">
-                  <i class="fa-brands fa-angular tech-icon"></i>
-                  <p class="box-tech-title">{{data.angularJs}}</p>
-                </div>
-                <div class="box-tech">
-                  <i class="fa-brands fa-java tech-icon"></i>
-                  <p class="box-tech-title">{{data.java}}</p>
-                </div> --}}
               </div>
             </div>
           </div>

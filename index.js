@@ -2,6 +2,22 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
+const dbPool = require("./src/connection/database");
+
+// sequalize
+const { development } = require("./src/config/config.json");
+const { Sequelize, QueryTypes } = require("sequelize");
+const SequelizePool = new Sequelize(development);
+
+// test db
+dbPool.connect((err) => {
+  if (err) {
+    console.log(err.message);
+  } else {
+    console.log("Database Connected");
+  }
+});
+
 // use hbs for view engine
 app.set("view engine", "hbs");
 // menambahkan path
@@ -34,9 +50,11 @@ function contact(req, res) {
   res.render("contact", { titlePage });
 }
 
-function myProject(req, res) {
+async function myProject(req, res) {
+  const projectNew = await SequelizePool.query("SELECT * FROM projects");
   const titlePage = "My Project";
-  res.render("my-project", { data, titlePage });
+  console.log(projectNew[0]);
+  res.render("my-project", { data: projectNew[0], titlePage });
 }
 
 function myTestimonials(req, res) {
@@ -44,94 +62,85 @@ function myTestimonials(req, res) {
   res.render("my-testimonials", { titlePage });
 }
 
-function detailProject(req, res) {
+async function detailProject(req, res) {
   const titlePage = "Detail Project";
   const { id } = req.params;
-  const dataDetailProject = data[id];
+  const data = await SequelizePool.query(
+    "SELECT * FROM projects where id = " + id
+  );
 
-  res.render("detail-project", { data: dataDetailProject, titlePage });
+  res.render("detail-project", { data: data[0][0], titlePage });
 }
 
-function handleMyProject(req, res) {
-  const { projectName, startDate, endDate, description, techIcon } = req.body;
+async function handleMyProject(req, res) {
+  try {
+    const { projectName, startDate, endDate, description, techIcon } = req.body;
+    const dateOne = new Date(startDate);
+    const dateTwo = new Date(endDate);
+    const time = Math.abs(dateTwo - dateOne);
+    const days = Math.floor(time / (1000 * 60 * 60 * 24));
+    const months = Math.floor(time / (1000 * 60 * 60 * 24 * 30));
+    const years = Math.floor(time / (1000 * 60 * 60 * 24) / 365);
+    let distance = [];
+    if (days < 24) {
+      distance += days + " Days";
+    } else if (months < 12) {
+      distance += months + " Month";
+    } else if (years < 365) {
+      distance += years + " Years";
+    }
 
-  const dateOne = new Date(startDate);
-  const dateTwo = new Date(endDate);
-  const time = Math.abs(dateTwo - dateOne);
-  const days = Math.floor(time / (1000 * 60 * 60 * 24));
-  const months = Math.floor(time / (1000 * 60 * 60 * 24 * 30));
-  const years = Math.floor(time / (1000 * 60 * 60 * 24) / 365);
-
-  let distance = [];
-
-  if (days < 24) {
-    distance += days + " Days";
-  } else if (months < 12) {
-    distance += months + " Month";
-  } else if (years < 365) {
-    distance += years + " Years";
+    await SequelizePool.query(
+      `INSERT INTO projects(project_name, start_date,end_date,description,technologies, "createdAt", "updatedAt",distance) VALUES ('${projectName}','${startDate}','${endDate}' ,'${description}','{${techIcon}}',NOW(), NOW(), '${distance}')`
+    );
+    res.redirect("/my-project");
+  } catch (error) {
+    throw error;
   }
-
-  data.unshift({
-    projectName,
-    startDate,
-    endDate,
-    description,
-    distance,
-    techIcon: Array.isArray(techIcon) ? techIcon : [techIcon],
-    authorName: "Aris Kiflan",
-  });
-
-  res.redirect("/my-project");
 }
 
-function editMyProject(req, res) {
+async function editMyProject(req, res) {
   const { id } = req.params;
-  const dataEditProject = data[+id];
-  dataEditProject.id = id;
+  const data = await SequelizePool.query(
+    "SELECT * FROM projects where id = " + id
+  );
 
-  res.render("edit-my-project", { data: dataEditProject });
+  res.render("edit-my-project", { data: data[0][0] });
 }
 
-function editMyProjectForm(req, res) {
-  const { id } = req.params;
-  const { projectName, startDate, endDate, description, techIcon } = req.body;
+async function editMyProjectForm(req, res) {
+  try {
+    const { id } = req.params;
+    const { projectName, startDate, endDate, description, techIcon } = req.body;
+    const dateOne = new Date(startDate);
+    const dateTwo = new Date(endDate);
+    const time = Math.abs(dateTwo - dateOne);
+    const days = Math.floor(time / (1000 * 60 * 60 * 24));
+    const months = Math.floor(time / (1000 * 60 * 60 * 24 * 30));
+    const years = Math.floor(time / (1000 * 60 * 60 * 24) / 365);
+    let distance = [];
+    if (days < 24) {
+      distance += days + " Days";
+    } else if (months < 12) {
+      distance += months + " Month";
+    } else if (years < 365) {
+      distance += years + " Years";
+    }
 
-  const dateOne = new Date(startDate);
-  const dateTwo = new Date(endDate);
-  const time = Math.abs(dateTwo - dateOne);
-  const days = Math.floor(time / (1000 * 60 * 60 * 24));
-  const months = Math.floor(time / (1000 * 60 * 60 * 24 * 30));
-  const years = Math.floor(time / (1000 * 60 * 60 * 24) / 365);
-
-  let distance = [];
-
-  if (days < 24) {
-    distance += days + " Days";
-  } else if (months < 12) {
-    distance += months + " Month";
-  } else if (years < 365) {
-    distance += years + " Years";
+    await SequelizePool.query(
+      `UPDATE projects SET project_name='${projectName}', start_date='${startDate}', end_date='${endDate}', description='${description}',"updatedAt"=now(), distance='${distance}', technologies='{${techIcon}}' where id = ${id}`
+    );
+    res.redirect("/my-project");
+  } catch (error) {
+    throw error;
   }
-
-  data[+id] = {
-    projectName,
-    startDate,
-    endDate,
-    description,
-    distance,
-    techIcon: Array.isArray(techIcon) ? techIcon : [techIcon],
-    authorName: "Aris Kiflan",
-  };
-
-  console.log(data[+id]);
-
-  res.redirect("/my-project");
 }
 
-function handleDeleteProject(req, res) {
+async function handleDeleteProject(req, res) {
   const { id } = req.params;
-  data.splice(id, 1);
+  const data = await SequelizePool.query(
+    "DELETE FROM projects where id = " + id
+  );
 
   res.redirect("/my-project");
 }
