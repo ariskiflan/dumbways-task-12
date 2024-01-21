@@ -1,4 +1,7 @@
 const express = require("express");
+const bcrypt = require("bcrypt");
+const session = require("express-session");
+const flash = require("express-flash");
 const app = express();
 const port = 3000;
 
@@ -6,7 +9,7 @@ const port = 3000;
 
 // sequalize
 const { development } = require("./src/config/config.json");
-const { Sequelize } = require("sequelize");
+const { Sequelize, QueryTypes } = require("sequelize");
 const SequelizePool = new Sequelize(development);
 
 // test db
@@ -24,6 +27,20 @@ app.set("view engine", "hbs");
 app.set("views", "src/views");
 app.use("/assets", express.static("src/assets"));
 app.use(express.urlencoded({ extended: false })); // body parser
+app.use(
+  session({
+    cookie: {
+      httpOnly: true,
+      secure: false,
+      maxAge: 1 * 60 * 60 * 1000,
+    },
+    resave: false,
+    store: session.MemoryStore(),
+    secret: "session-storage",
+    saveUninitialized: true,
+  })
+);
+app.use(flash());
 
 // routing
 app.get("/", home);
@@ -34,7 +51,9 @@ app.post("/my-project", handleMyProject);
 app.get("/my-testimonials", myTestimonials);
 app.get("/detail-project/:id", detailProject);
 app.get("/register", register);
+app.post("/register", handleRegister);
 app.get("/login", login);
+app.post("/login", handleLogin);
 
 app.get("/delete/:id", handleDeleteProject);
 app.get("/edit-my-project/:id", editMyProject);
@@ -45,9 +64,55 @@ function register(req, res) {
   res.render("register", { titlePage });
 }
 
+async function handleRegister(req, res) {
+  try {
+    const { name, email, password } = req.body;
+
+    console.log(password);
+    bcrypt.hash(password, 10, async function (err, hashPass) {
+      await SequelizePool.query(
+        `INSERT INTO users (name, email, password, "createdAt", "updatedAt")
+      VALUES ('${name}','${email}','${hashPass}' ,NOW(), NOW())`
+      );
+    });
+
+    res.redirect("/login");
+  } catch (error) {
+    throw error;
+  }
+}
+
 function login(req, res) {
   const titlePage = "Login";
   res.render("login", { titlePage });
+}
+
+async function handleLogin(req, res) {
+  try {
+    const { email, password } = req.body;
+    const checkEmail = await SequelizePool.query(
+      `SELECT * FROM users WHERE email = '${email}'`,
+      { type: QueryTypes.SELECT }
+    );
+
+    if (checkEmail.length === 0) {
+      req.flash("failed", "Email is not register!");
+      return res.redirect("/login");
+    }
+
+    bcrypt.compare(password, checkEmail[0].password, function (err, result) {
+      if (!result) {
+        return res.redirect("/login");
+      } else {
+        req.session.handleLogin = true;
+        req.session.user = checkEmail[0].name;
+        req.flash("success", "Wellcome!");
+        return res.redirect("/");
+      }
+    });
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function home(req, res) {
@@ -55,7 +120,12 @@ async function home(req, res) {
   const titlePage = "Home";
 
   // console.log(projectNew[0]);
-  res.render("index", { data: projectNew[0], titlePage });
+  res.render("index", {
+    data: projectNew[0],
+    titlePage,
+    handleLogin: req.session.handleLogin,
+    user: req.session.user,
+  });
 }
 
 function contact(req, res) {
