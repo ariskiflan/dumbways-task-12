@@ -77,14 +77,23 @@
       </div>
     </nav>
 
+    {{#if messages.failed}}
+      <div class="alert alert-warning" role="alert">
+        <div class="container">
+          {{messages.failed}}
+        </div>
+      </div>
+    {{/if}}
+
     <main class="main">
       <section class="contact-section">
         <h1 class="contact-heading">LOGIN</h1>
 
-        <form class="">
+        <form class="" method="POST" action="/login">
           <div class="mb-3">
             <label for="exampleInputEmail" class="form-label fs-2">Email</label>
             <input
+              name="email"
               type="email"
               class="form-control py-4 px-2 shadow p-3 mb-5 bg-body-tertiary rounded border-0"
               id="exampleInputEmail"
@@ -96,6 +105,7 @@
               class="form-label fs-2"
             >Password</label>
             <input
+              name="password"
               type="password"
               class="form-control py-4 px-2 shadow p-3 mb-5 bg-body-tertiary rounded border-0"
               id="exampleInputNumber"
