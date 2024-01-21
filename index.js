@@ -2,21 +2,21 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
-const dbPool = require("./src/connection/database");
+// const dbPool = require("./src/connection/database");
 
 // sequalize
 const { development } = require("./src/config/config.json");
-const { Sequelize, QueryTypes } = require("sequelize");
+const { Sequelize } = require("sequelize");
 const SequelizePool = new Sequelize(development);
 
 // test db
-dbPool.connect((err) => {
-  if (err) {
-    console.log(err.message);
-  } else {
-    console.log("Database Connected");
-  }
-});
+// dbPool.connect((err) => {
+//   if (err) {
+//     console.log(err.message);
+//   } else {
+//     console.log("Database Connected");
+//   }
+// });
 
 // use hbs for view engine
 app.set("view engine", "hbs");
@@ -33,16 +33,29 @@ app.post("/my-project", handleMyProject);
 
 app.get("/my-testimonials", myTestimonials);
 app.get("/detail-project/:id", detailProject);
+app.get("/register", register);
+app.get("/login", login);
 
 app.get("/delete/:id", handleDeleteProject);
 app.get("/edit-my-project/:id", editMyProject);
 app.post("/edit-my-project/:id", editMyProjectForm);
 
-const data = [];
+function register(req, res) {
+  const titlePage = "Register";
+  res.render("register", { titlePage });
+}
 
-function home(req, res) {
+function login(req, res) {
+  const titlePage = "Login";
+  res.render("login", { titlePage });
+}
+
+async function home(req, res) {
+  const projectNew = await SequelizePool.query("SELECT * FROM projects");
   const titlePage = "Home";
-  res.render("index", { titlePage });
+
+  // console.log(projectNew[0]);
+  res.render("index", { data: projectNew[0], titlePage });
 }
 
 function contact(req, res) {
@@ -51,10 +64,9 @@ function contact(req, res) {
 }
 
 async function myProject(req, res) {
-  const projectNew = await SequelizePool.query("SELECT * FROM projects");
   const titlePage = "My Project";
-  console.log(projectNew[0]);
-  res.render("my-project", { data: projectNew[0], titlePage });
+
+  res.render("my-project", { data: titlePage });
 }
 
 function myTestimonials(req, res) {
@@ -75,13 +87,16 @@ async function detailProject(req, res) {
 async function handleMyProject(req, res) {
   try {
     const { projectName, startDate, endDate, description, techIcon } = req.body;
+
     const dateOne = new Date(startDate);
     const dateTwo = new Date(endDate);
     const time = Math.abs(dateTwo - dateOne);
     const days = Math.floor(time / (1000 * 60 * 60 * 24));
     const months = Math.floor(time / (1000 * 60 * 60 * 24 * 30));
     const years = Math.floor(time / (1000 * 60 * 60 * 24) / 365);
+
     let distance = [];
+
     if (days < 24) {
       distance += days + " Days";
     } else if (months < 12) {
@@ -91,9 +106,10 @@ async function handleMyProject(req, res) {
     }
 
     await SequelizePool.query(
-      `INSERT INTO projects(project_name, start_date,end_date,description,technologies, "createdAt", "updatedAt",distance) VALUES ('${projectName}','${startDate}','${endDate}' ,'${description}','{${techIcon}}',NOW(), NOW(), '${distance}')`
+      `INSERT INTO projects(project_name, start_date,end_date,description,technologies, "createdAt", "updatedAt",distance) 
+      VALUES ('${projectName}','${startDate}','${endDate}' ,'${description}','{${techIcon}}',NOW(), NOW(), '${distance}')`
     );
-    res.redirect("/my-project");
+    res.redirect("/");
   } catch (error) {
     throw error;
   }
@@ -111,14 +127,18 @@ async function editMyProject(req, res) {
 async function editMyProjectForm(req, res) {
   try {
     const { id } = req.params;
+
     const { projectName, startDate, endDate, description, techIcon } = req.body;
+
     const dateOne = new Date(startDate);
     const dateTwo = new Date(endDate);
     const time = Math.abs(dateTwo - dateOne);
     const days = Math.floor(time / (1000 * 60 * 60 * 24));
     const months = Math.floor(time / (1000 * 60 * 60 * 24 * 30));
     const years = Math.floor(time / (1000 * 60 * 60 * 24) / 365);
+
     let distance = [];
+
     if (days < 24) {
       distance += days + " Days";
     } else if (months < 12) {
@@ -128,9 +148,10 @@ async function editMyProjectForm(req, res) {
     }
 
     await SequelizePool.query(
-      `UPDATE projects SET project_name='${projectName}', start_date='${startDate}', end_date='${endDate}', description='${description}',"updatedAt"=now(), distance='${distance}', technologies='{${techIcon}}' where id = ${id}`
+      `UPDATE projects SET project_name='${projectName}', start_date='${startDate}', end_date='${endDate}', 
+      description='${description}',"updatedAt"=now(), distance='${distance}', technologies='{${techIcon}}' where id = ${id}`
     );
-    res.redirect("/my-project");
+    res.redirect("/");
   } catch (error) {
     throw error;
   }
@@ -142,7 +163,7 @@ async function handleDeleteProject(req, res) {
     "DELETE FROM projects where id = " + id
   );
 
-  res.redirect("/my-project");
+  res.redirect("/");
 }
 
 app.listen(port, () => {
