@@ -61,7 +61,11 @@ app.post("/edit-my-project/:id", editMyProjectForm);
 
 function register(req, res) {
   const titlePage = "Register";
-  res.render("register", { titlePage });
+  res.render("register", {
+    titlePage,
+    handleLogin: req.session.handleLogin,
+    user: req.session.user,
+  });
 }
 
 async function handleRegister(req, res) {
@@ -84,7 +88,11 @@ async function handleRegister(req, res) {
 
 function login(req, res) {
   const titlePage = "Login";
-  res.render("login", { titlePage });
+  res.render("login", {
+    titlePage,
+    handleLogin: req.session.handleLogin,
+    user: req.session.user,
+  });
 }
 
 async function handleLogin(req, res) {
@@ -130,18 +138,30 @@ async function home(req, res) {
 
 function contact(req, res) {
   const titlePage = "Contact";
-  res.render("contact", { titlePage });
+  res.render("contact", {
+    titlePage,
+    handleLogin: req.session.handleLogin,
+    user: req.session.user,
+  });
 }
 
 async function myProject(req, res) {
   const titlePage = "My Project";
 
-  res.render("my-project", { data: titlePage });
+  res.render("my-project", {
+    data: titlePage,
+    handleLogin: req.session.handleLogin,
+    user: req.session.user,
+  });
 }
 
 function myTestimonials(req, res) {
   const titlePage = "My Testimonials";
-  res.render("my-testimonials", { titlePage });
+  res.render("my-testimonials", {
+    titlePage,
+    handleLogin: req.session.handleLogin,
+    user: req.session.user,
+  });
 }
 
 async function detailProject(req, res) {
@@ -151,7 +171,12 @@ async function detailProject(req, res) {
     "SELECT * FROM projects where id = " + id
   );
 
-  res.render("detail-project", { data: data[0][0], titlePage });
+  res.render("detail-project", {
+    data: data[0][0],
+    titlePage,
+    handleLogin: req.session.handleLogin,
+    user: req.session.user,
+  });
 }
 
 async function handleMyProject(req, res) {
@@ -191,7 +216,11 @@ async function editMyProject(req, res) {
     "SELECT * FROM projects where id = " + id
   );
 
-  res.render("edit-my-project", { data: data[0][0] });
+  res.render("edit-my-project", {
+    data: data[0][0],
+    handleLogin: req.session.handleLogin,
+    user: req.session.user,
+  });
 }
 
 async function editMyProjectForm(req, res) {

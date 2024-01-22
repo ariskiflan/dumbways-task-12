@@ -43,28 +43,53 @@
 
         <div class="collapse navbar-collapse ms-5 me-5" id="navbarNav">
           <ul class="navbar-nav grid gap-4">
-            <li class="nav-item">
-              <a
-                class="nav-link fs-2 fw-medium"
-                aria-current="page"
-                href="/"
-              >Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link fs-2 fw-medium" href="/my-project">Add project</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link fs-2 fw-medium" href="/my-testimonials">My
-                Testimonials</a>
-            </li>
+            {{#if handleLogin}}
+              <li class="nav-item">
+                <a
+                  class="nav-link active fs-2 fw-medium"
+                  aria-current="page"
+                  href="/"
+                >Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link fs-2 fw-medium" href="/my-project">Add
+                  project</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link fs-2 fw-medium" href="/my-testimonials">My
+                  Testimonials</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link fs-2 fw-medium" href="#">Hallo
+                  {{user}}</a>
+              </li>
 
-            <li class="nav-item">
-              <a class="nav-link fs-2 fw-medium" href="/register">Registers</a>
-            </li>
+              <li class="nav-item">
+                <a class="nav-link fs-2 fw-medium" href="#">Logout</a>
+              </li>
+            {{else}}
+              <li class="nav-item">
+                <a
+                  class="nav-link active fs-2 fw-medium"
+                  aria-current="page"
+                  href="/"
+                >Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link fs-2 fw-medium" href="/my-testimonials">My
+                  Testimonials</a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link fs-2 fw-medium"
+                  href="/register"
+                >Registers</a>
+              </li>
 
-            <li class="nav-item">
-              <a class="nav-link fs-2 fw-medium" href="/login">Login</a>
-            </li>
+              <li class="nav-item">
+                <a class="nav-link fs-2 fw-medium" href="/login">Login</a>
+              </li>
+            {{/if}}
 
           </ul>
         </div>
@@ -79,7 +104,7 @@
 
     {{#if messages.failed}}
       <div class="alert alert-warning" role="alert">
-        <div class="container">
+        <div class="container text-center fs-2">
           {{messages.failed}}
         </div>
       </div>
