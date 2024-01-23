@@ -54,6 +54,7 @@ app.get("/register", register);
 app.post("/register", handleRegister);
 app.get("/login", login);
 app.post("/login", handleLogin);
+app.get("/logout", handleLogout);
 
 app.get("/delete/:id", handleDeleteProject);
 app.get("/edit-my-project/:id", editMyProject);
@@ -127,12 +128,16 @@ async function home(req, res) {
   const projectNew = await SequelizePool.query("SELECT * FROM projects");
   const titlePage = "Home";
 
-  // console.log(projectNew[0]);
+  const dataNew = projectNew[0].map((res) => ({
+    ...res,
+    handleLogin: req.session.handleLogin,
+  }));
+
   res.render("index", {
-    data: projectNew[0],
     titlePage,
     handleLogin: req.session.handleLogin,
     user: req.session.user,
+    data: dataNew,
   });
 }
 
@@ -262,6 +267,12 @@ async function handleDeleteProject(req, res) {
     "DELETE FROM projects where id = " + id
   );
 
+  res.redirect("/");
+}
+
+function handleLogout(req, res) {
+  req.session.handleLogin = false;
+  req.session.user = null;
   res.redirect("/");
 }
 
