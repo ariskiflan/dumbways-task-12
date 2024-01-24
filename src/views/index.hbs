@@ -61,6 +61,7 @@
                 <a class="nav-link fs-2 fw-medium" href="/my-testimonials">My
                   Testimonials</a>
               </li>
+
               <li class="nav-item">
                 <a class="nav-link fs-2 fw-medium" href="#">Hallo
                   {{user}}</a>
@@ -69,6 +70,7 @@
               <li class="nav-item">
                 <a class="nav-link fs-2 fw-medium" href="/logout">Logout</a>
               </li>
+
             {{else}}
               <li class="nav-item">
                 <a
@@ -81,6 +83,7 @@
                 <a class="nav-link fs-2 fw-medium" href="/my-testimonials">My
                   Testimonials</a>
               </li>
+
               <li class="nav-item">
                 <a
                   class="nav-link fs-2 fw-medium"
@@ -91,6 +94,7 @@
               <li class="nav-item">
                 <a class="nav-link fs-2 fw-medium" href="/login">Login</a>
               </li>
+
             {{/if}}
           </ul>
         </div>
@@ -186,7 +190,7 @@
             {{#each data}}
               <div class="box">
                 <a href="/detail-project/{{this.id}}">
-                  <img src="assets/img/project2.jpg" alt="" class="list-img" />
+                  <img src="/uploads/{{this.image}}" alt="" class="list-img" />
                 </a>
                 <h3 class="list-project-title">{{this.project_name}}</h3>
                 <div class="author-box">
@@ -194,8 +198,8 @@
                     Duration:
                     {{this.distance}}
                   </p>
-                  {{!-- <p class="span-item">|</p>
-                  <p class="author-name">{{authorName}}</p> --}}
+                  <p class="span-item">|</p>
+                  <p class="author-name">{{this.name}}</p>
                 </div>
                 <p class="list-project-description">{{this.description}}
                 </p>

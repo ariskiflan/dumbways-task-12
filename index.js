@@ -2,30 +2,21 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 const flash = require("express-flash");
+const upload = require("./src/middlewares/uploadFile");
 const app = express();
 const port = 3000;
-
-// const dbPool = require("./src/connection/database");
 
 // sequalize
 const { development } = require("./src/config/config.json");
 const { Sequelize, QueryTypes } = require("sequelize");
 const SequelizePool = new Sequelize(development);
 
-// test db
-// dbPool.connect((err) => {
-//   if (err) {
-//     console.log(err.message);
-//   } else {
-//     console.log("Database Connected");
-//   }
-// });
-
 // use hbs for view engine
 app.set("view engine", "hbs");
 // menambahkan path
 app.set("views", "src/views");
 app.use("/assets", express.static("src/assets"));
+app.use("/uploads", express.static("src/uploads"));
 app.use(express.urlencoded({ extended: false })); // body parser
 app.use(
   session({
@@ -46,7 +37,7 @@ app.use(flash());
 app.get("/", home);
 app.get("/contact", contact);
 app.get("/my-project", myProject);
-app.post("/my-project", handleMyProject);
+app.post("/my-project", upload.single("image"), handleMyProject);
 
 app.get("/my-testimonials", myTestimonials);
 app.get("/detail-project/:id", detailProject);
@@ -58,7 +49,7 @@ app.get("/logout", handleLogout);
 
 app.get("/delete/:id", handleDeleteProject);
 app.get("/edit-my-project/:id", editMyProject);
-app.post("/edit-my-project/:id", editMyProjectForm);
+app.post("/edit-my-project/:id", upload.single("image"), editMyProjectForm);
 
 function register(req, res) {
   const titlePage = "Register";
@@ -73,7 +64,7 @@ async function handleRegister(req, res) {
   try {
     const { name, email, password } = req.body;
 
-    console.log(password);
+    // console.log(password);
     bcrypt.hash(password, 10, async function (err, hashPass) {
       await SequelizePool.query(
         `INSERT INTO users (name, email, password, "createdAt", "updatedAt")
@@ -115,6 +106,7 @@ async function handleLogin(req, res) {
       } else {
         req.session.handleLogin = true;
         req.session.user = checkEmail[0].name;
+        req.session.idUsers = checkEmail[0].id;
         req.flash("success", "Wellcome!");
         return res.redirect("/");
       }
@@ -125,20 +117,40 @@ async function handleLogin(req, res) {
 }
 
 async function home(req, res) {
-  const projectNew = await SequelizePool.query("SELECT * FROM projects");
-  const titlePage = "Home";
+  try {
+    let projectNew;
 
-  const dataNew = projectNew[0].map((res) => ({
-    ...res,
-    handleLogin: req.session.handleLogin,
-  }));
+    if (req.session.handleLogin) {
+      const author = req.session.idUsers;
+      projectNew = await SequelizePool.query(
+        `SELECT projects.id, projects.project_name, projects.description, projects.distance, projects.image, projects.author,
+         projects."createdAt", projects."updatedAt", projects.technologies, users.name FROM projects INNER JOIN users ON projects.author = users.id where author = ${author} ORDER BY projects.id DESC`,
+        { type: QueryTypes.SELECT }
+      );
+    } else {
+      projectNew = await SequelizePool.query(
+        `SELECT projects.id, projects.project_name, projects.description, projects.distance, projects.image, projects.author,
+         projects."createdAt", projects."updatedAt", projects.technologies, users.name FROM projects INNER JOIN users ON projects.author = users.id ORDER BY projects.id DESC`,
+        { type: QueryTypes.SELECT }
+      );
+    }
 
-  res.render("index", {
-    titlePage,
-    handleLogin: req.session.handleLogin,
-    user: req.session.user,
-    data: dataNew,
-  });
+    const titlePage = "Home";
+
+    const dataNew = projectNew.map((res) => ({
+      ...res,
+      handleLogin: req.session.handleLogin,
+    }));
+
+    res.render("index", {
+      titlePage,
+      handleLogin: req.session.handleLogin,
+      user: req.session.user,
+      data: dataNew,
+    });
+  } catch (error) {
+    throw error;
+  }
 }
 
 function contact(req, res) {
@@ -172,12 +184,12 @@ function myTestimonials(req, res) {
 async function detailProject(req, res) {
   const titlePage = "Detail Project";
   const { id } = req.params;
-  const data = await SequelizePool.query(
+  const dataDetail = await SequelizePool.query(
     "SELECT * FROM projects where id = " + id
   );
 
   res.render("detail-project", {
-    data: data[0][0],
+    data: dataDetail[0][0],
     titlePage,
     handleLogin: req.session.handleLogin,
     user: req.session.user,
@@ -187,6 +199,10 @@ async function detailProject(req, res) {
 async function handleMyProject(req, res) {
   try {
     const { projectName, startDate, endDate, description, techIcon } = req.body;
+
+    const author = req.session.idUsers;
+
+    const image = req.file.filename;
 
     const dateOne = new Date(startDate);
     const dateTwo = new Date(endDate);
@@ -206,9 +222,10 @@ async function handleMyProject(req, res) {
     }
 
     await SequelizePool.query(
-      `INSERT INTO projects(project_name, start_date,end_date,description,technologies, "createdAt", "updatedAt",distance) 
-      VALUES ('${projectName}','${startDate}','${endDate}' ,'${description}','{${techIcon}}',NOW(), NOW(), '${distance}')`
+      `INSERT INTO projects(project_name, start_date, end_date, description, distance, image, author, "createdAt", "updatedAt", technologies) 
+      VALUES ('${projectName}','${startDate}','${endDate}','${description}','${distance}','${image}',${author}, NOW(), NOW(), '{${techIcon}}')`
     );
+
     res.redirect("/");
   } catch (error) {
     throw error;
@@ -234,6 +251,8 @@ async function editMyProjectForm(req, res) {
 
     const { projectName, startDate, endDate, description, techIcon } = req.body;
 
+    const image = req.file.filename;
+
     const dateOne = new Date(startDate);
     const dateTwo = new Date(endDate);
     const time = Math.abs(dateTwo - dateOne);
@@ -253,7 +272,7 @@ async function editMyProjectForm(req, res) {
 
     await SequelizePool.query(
       `UPDATE projects SET project_name='${projectName}', start_date='${startDate}', end_date='${endDate}', 
-      description='${description}',"updatedAt"=now(), distance='${distance}', technologies='{${techIcon}}' where id = ${id}`
+      description='${description}',distance='${distance}',image='${image}',"updatedAt"=now(), technologies='{${techIcon}}' where id = ${id}`
     );
     res.redirect("/");
   } catch (error) {

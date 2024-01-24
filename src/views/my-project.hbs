@@ -92,28 +92,6 @@
               </li>
             {{/if}}
 
-            {{! <li class="nav-item">
-              <a
-                class="nav-link fs-2 fw-medium"
-                aria-current="page"
-                href="/"
-              >Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active fs-2 fw-medium" href="/my-project">Add
-                project</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link fs-2 fw-medium" href="/my-testimonials">My
-                Testimonials</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link fs-2 fw-medium" href="/register">Registers</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link fs-2 fw-medium" href="/login">Login</a>
-            </li> }}
           </ul>
         </div>
         <a
@@ -129,7 +107,12 @@
         <div class="container add-project-box">
           <h1 class="project-heading">ADD MY PROJECT</h1>
 
-          <form class="project-form" action="/my-project" method="POST">
+          <form
+            class="project-form"
+            action="/my-project"
+            method="POST"
+            enctype="multipart/form-data"
+          >
             <div class="mb-3">
               <label for="exampleInputName" class="form-label fs-2 fw-medium">
                 Project Name</label>
@@ -259,6 +242,7 @@
               <label for="formFile" class="form-label fs-2 fw-medium">Upload
                 Image</label>
               <input
+                name="image"
                 class="form-control form-control-lg px-2"
                 type="file"
                 id="formFile"
@@ -280,47 +264,6 @@
         </div>
       </section>
 
-      {{!-- <section class="list-project">
-        <h1 class="project-heading">MY PROJECT</h1>
-        <div class="container-list list-container">
-          <div class="list-box">
-            {{#each data}}
-              <div class="box">
-                <a href="/detail-project/{{this.id}}">
-                  <img src="assets/img/project2.jpg" alt="" class="list-img" />
-                </a>
-                <h3 class="list-project-title">{{this.project_name}}</h3>
-                <div class="author-box">
-                  <p class="list-project-duration">
-                    Duration:
-                    {{this.distance}}
-                  </p>
-
-                </div>
-                <p class="list-project-description">{{this.description}}
-                </p>
-
-                <div class="list-icon">
-                  {{#each this.technologies}}
-                    <i class="fa-brands {{this}}"></i>
-                  {{/each}}
-                </div>
-
-                <div class="button-box">
-                  <a
-                    href="/edit-my-project/{{this.id}}"
-                    class="list-btn"
-                  >Edit</a>
-
-                  <a href="/delete/{{this.id}}" class="list-btn">Delete</a>
-
-                </div>
-              </div>
-            {{/each}}
-          </div>
-
-        </div>
-      </section> --}}
     </main>
 
     <script src="assets/script/my-project.js"></script>

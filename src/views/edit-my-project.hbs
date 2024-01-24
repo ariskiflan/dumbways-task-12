@@ -106,7 +106,11 @@
         <div class="container add-project-box">
           <h1 class="project-heading">EDIT MY PROJECT</h1>
 
-          <form action="/edit-my-project/{{data.id}}" method="POST">
+          <form
+            action="/edit-my-project/{{data.id}}"
+            method="POST"
+            enctype="multipart/form-data"
+          >
 
             <div class="mb-3">
               <label for="exampleInputName" class="form-label fs-2 fw-medium">
@@ -240,6 +244,7 @@
               <label for="formFile" class="form-label fs-2 fw-medium">Upload
                 Image</label>
               <input
+                name="image"
                 class="form-control form-control-lg py-3 px-2"
                 type="file"
                 id="formFile"

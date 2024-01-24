@@ -19,6 +19,8 @@ module.exports = (sequelize, DataTypes) => {
       description: DataTypes.TEXT,
       technologies: DataTypes.ARRAY(DataTypes.STRING),
       distance: DataTypes.STRING,
+      image: DataTypes.STRING,
+      author: DataTypes.INTEGER,
     },
     {
       sequelize,
