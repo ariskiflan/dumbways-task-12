@@ -231,6 +231,10 @@ body {
   width: 100%;
 }
 
+.btn {
+  margin-left: 2rem !important;
+}
+
 @media only screen and (max-width: 800px) {
   /* NAV */
   .nav-btn {

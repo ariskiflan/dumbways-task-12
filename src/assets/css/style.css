@@ -72,7 +72,7 @@ body {
 }
 
 .logo {
-  width: 7rem;
+  width: 6rem;
 }
 
 /* HERO SECTION */
@@ -320,6 +320,10 @@ body {
   font-size: 4rem;
   margin-bottom: 4rem;
   text-align: center;
+}
+
+.btn {
+  margin-left: 2rem !important;
 }
 
 @media only screen and (max-width: 1200px) {

@@ -22,7 +22,7 @@
     />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    {{!-- <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid px-4 py-4">
         <a class="navbar-brand" href="/"><img
             class="logo"
@@ -97,6 +97,90 @@
           href="/contact"
           role="button"
         >Contact Me</a>
+      </div>
+    </nav> --}}
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary px-5">
+      <div class="container-fluid px-4 py-4">
+        <a class="navbar-brand" href="/"><img
+            class="logo"
+            src="assets/img/dwlogo.png"
+            alt="dumbways logo"
+          /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          {{#if handleLogin}}
+            <ul class="navbar-nav gap-4">
+              <li class="nav-item">
+                <a class="nav-link fs-2 fw-medium" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link fs-2 fw-medium" href="/my-project">Add
+                  Project</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link fs-2 fw-medium" href="/my-testimonials">My
+                  Testimonial</a>
+              </li>
+            </ul>
+          {{else}}
+            <ul class="navbar-nav gap-4">
+              <li class="nav-item">
+                <a class="nav-link fs-2 fw-medium" href="/">Home</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link fs-2 fw-medium" href="/my-testimonials">My
+                  Testimonial</a>
+              </li>
+            </ul>
+          {{/if}}
+
+          <div
+            class="collapse navbar-collapse justify-content-end"
+            id="navbarNav"
+          >
+            <ul class="navbar-nav gap-4">
+              {{#if handleLogin}}
+                <li class="nav-item">
+                  <a class="nav-link fw-medium active fs-2">Hello, {{user}}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link fs-2 fw-medium" href="/logout">Logout</a>
+                </li>
+
+              {{else}}
+
+                <li class="nav-item">
+                  <a
+                    class="nav-link fs-2 fw-medium"
+                    href="/register"
+                  >Register</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link fs-2 fw-medium" href="/login">Login</a>
+                </li>
+
+              {{/if}}
+            </ul>
+            <a
+              class="btn btn-primary px-5 py-3 fs-2 bg-dark rounded-pill border-0 d-none d-lg-block"
+              href="/contact"
+              role="button"
+            >Contact Me</a>
+
+          </div>
+        </div>
       </div>
     </nav>
 

@@ -165,6 +165,10 @@ body {
   display: none;
 }
 
+.btn {
+  margin-left: 2rem !important;
+}
+
 @media only screen and (max-width: 704px) {
   .contact-form input,
   .contact-form textarea,

@@ -361,6 +361,10 @@ input[type="checkbox"]:checked:after {
   font-size: 1.5rem;
 }
 
+.btn {
+  margin-left: 2rem !important;
+}
+
 @media only screen and (max-width: 1200px) {
   .list-box {
     grid-template-columns: repeat(2, 1fr);

@@ -157,6 +157,10 @@ body {
   display: none;
 }
 
+.btn {
+  margin-left: 2rem !important;
+}
+
 @media only screen and (max-width: 1200px) {
   .detail-project {
     grid-template-columns: 1fr 1fr;
