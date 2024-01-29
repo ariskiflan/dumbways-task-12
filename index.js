@@ -251,8 +251,6 @@ async function editMyProjectForm(req, res) {
 
     const { projectName, startDate, endDate, description, techIcon } = req.body;
 
-    const image = req.file.filename;
-
     const dateOne = new Date(startDate);
     const dateTwo = new Date(endDate);
     const time = Math.abs(dateTwo - dateOne);
@@ -270,10 +268,24 @@ async function editMyProjectForm(req, res) {
       distance += years + " Years";
     }
 
-    await SequelizePool.query(
-      `UPDATE projects SET project_name='${projectName}', start_date='${startDate}', end_date='${endDate}', 
-      description='${description}',distance='${distance}',image='${image}',"updatedAt"=now(), technologies='{${techIcon}}' where id = ${id}`
-    );
+    let image = "";
+
+    if (req.file) {
+      image = req.file.filename;
+      console.log(image);
+    }
+
+    let updateImage = `UPDATE projects SET project_name='${projectName}', start_date='${startDate}', end_date='${endDate}', 
+        description='${description}',distance='${distance}',"updatedAt"=now(), technologies='{${techIcon}}' `;
+
+    if (image !== "") {
+      updateImage += `, image = '${image}'`;
+    }
+
+    updateImage += `where id = ${id}`;
+
+    await SequelizePool.query(updateImage);
+
     res.redirect("/");
   } catch (error) {
     throw error;
